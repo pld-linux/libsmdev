@@ -6,7 +6,7 @@ Summary:	Library to access and read storage media (SM) devices
 Summary(pl.UTF-8):	Biblioteka służąca do dostępu i odczytu urządzeń nośników pamięci (SM)
 Name:		libsmdev
 Version:	20150105
-Release:	1
+Release:	2
 License:	LGPL v3+
 Group:		Libraries
 Source0:	https://github.com/libyal/libsmdev/archive/%{version}/%{name}-%{version}.tar.gz
