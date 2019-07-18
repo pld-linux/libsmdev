@@ -1,43 +1,53 @@
 #
 # Conditional build:
-%bcond_without	python	# Python bindings
+%bcond_without	python	# Python bindings (any)
+%bcond_without	python2	# CPython 2.x bindings
+%bcond_without	python3	# CPython 3.x bindings
 #
+%if %{without python}
+%undefine	with_python2
+%undefine	with_python3
+%endif
+# see m4/${libname}.m4 />= for required version of particular library
+%define		libcdata_ver	20190112
+%define		libcerror_ver	20120425
+%define		libcfile_ver	20160409
+%define		libclocale_ver	20120425
+%define		libcnotify_ver	20120425
+%define		libcthreads_ver	20160404
+%define		libuna_ver	20181006
 Summary:	Library to access and read storage media (SM) devices
 Summary(pl.UTF-8):	Biblioteka służąca do dostępu i odczytu urządzeń nośników pamięci (SM)
 Name:		libsmdev
-Version:	20150105
-Release:	3
+Version:	20190315
+Release:	1
 License:	LGPL v3+
 Group:		Libraries
-Source0:	https://github.com/libyal/libsmdev/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	872758d8c516785966cab26de58d7f1b
-Patch0:		%{name}-system-libs.patch
+#Source0Download: https://github.com/libyal/libsmdev/releases
+Source0:	https://github.com/libyal/libsmdev/releases/download/%{version}/%{name}-alpha-%{version}.tar.gz
+# Source0-md5:	d4438396d387f4074335846674a48508
 URL:		https://github.com/libyal/libsmdev/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1.6
 BuildRequires:	gettext-tools >= 0.18.1
-BuildRequires:	libcdata-devel >= 20150102
-BuildRequires:	libcerror-devel >= 20120425
-BuildRequires:	libcfile-devel >= 20140503
-BuildRequires:	libclocale-devel >= 20120425
-BuildRequires:	libcnotify-devel >= 20120425
-BuildRequires:	libcstring-devel >= 20120425
-BuildRequires:	libcsystem-devel >= 20141018
-BuildRequires:	libcthreads-devel >= 20130509
-BuildRequires:	libuna-devel >= 20120425
+BuildRequires:	libcdata-devel >= %{libcdata_ver}
+BuildRequires:	libcerror-devel >= %{libcerror_ver}
+BuildRequires:	libcfile-devel >= %{libcfile_ver}
+BuildRequires:	libclocale-devel >= %{libclocale_ver}
+BuildRequires:	libcnotify-devel >= %{libcnotify_ver}
+BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
+BuildRequires:	libuna-devel >= %{libuna_ver}
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-%{?with_python:BuildRequires:	python-devel >= 1:2.5}
-BuildRequires:	sed >= 4.0
-Requires:	libcdata >= 20150102
-Requires:	libcerror >= 20120425
-Requires:	libcfile >= 20140503
-Requires:	libclocale >= 20120425
-Requires:	libcnotify >= 20120425
-Requires:	libcstring >= 20120425
-Requires:	libcsystem >= 20141018
-Requires:	libcthreads >= 20130509
-Requires:	libuna >= 20120425
+%{?with_python2:BuildRequires:	python-devel >= 1:2.5}
+%{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
+Requires:	libcdata >= %{libcdata_ver}
+Requires:	libcerror >= %{libcerror_ver}
+Requires:	libcfile >= %{libcfile_ver}
+Requires:	libclocale >= %{libclocale_ver}
+Requires:	libcnotify >= %{libcnotify_ver}
+Requires:	libcthreads >= %{libcthreads_ver}
+Requires:	libuna >= %{libuna_ver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,14 +62,13 @@ Summary:	Header files for libsmdev library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libsmdev
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libcdata-devel >= 20150102
-Requires:	libcerror-devel >= 20120425
-Requires:	libcfile-devel >= 20140503
-Requires:	libclocale-devel >= 20120425
-Requires:	libcnotify-devel >= 20120425
-Requires:	libcstring-devel >= 20120425
-Requires:	libcthreads-devel >= 20130509
-Requires:	libuna-devel >= 20120425
+Requires:	libcdata-devel >= %{libcdata_ver}
+Requires:	libcerror-devel >= %{libcerror_ver}
+Requires:	libcfile-devel >= %{libcfile_ver}
+Requires:	libclocale-devel >= %{libclocale_ver}
+Requires:	libcnotify-devel >= %{libcnotify_ver}
+Requires:	libcthreads-devel >= %{libcthreads_ver}
+Requires:	libuna-devel >= %{libuna_ver}
 
 %description devel
 Header files for libsmdev library.
@@ -80,31 +89,42 @@ Static libsmdev library.
 Statyczna biblioteka libsmdev.
 
 %package -n python-pysmdev
-Summary:	Python bindings for libsmdev library
-Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libsmdev
+Summary:	Python 2 bindings for libsmdev library
+Summary(pl.UTF-8):	Wiązania Pythona 2 do biblioteki libsmdev
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python-pysmdev
-Python bindings for libsmdev library.
+Python 2 bindings for libsmdev library.
 
 %description -n python-pysmdev -l pl.UTF-8
-Wiązania Pythona do biblioteki libsmdev.
+Wiązania Pythona 2 do biblioteki libsmdev.
+
+%package -n python3-pysmdev
+Summary:	Python 3 bindings for libsmdev library
+Summary(pl.UTF-8):	Wiązania Pythona 3 do biblioteki libsmdev
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python3-pysmdev
+Python 3 bindings for libsmdev library.
+
+%description -n python3-pysmdev -l pl.UTF-8
+Wiązania Pythona 3 do biblioteki libsmdev.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__gettextize}
-%{__sed} -i -e 's/ po\/Makefile.in//' configure.ac
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_python:--enable-python}
+	%{?with_python2:--enable-python2} \
+	%{?with_python3:--enable-python3}
 %{__make}
 
 %install
@@ -116,8 +136,11 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libsmdev.la
 
-%if %{with python}
+%if %{with python2}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/pysmdev.{la,a}
+%endif
+%if %{with python3}
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/pysmdev.{la,a}
 %endif
 
 %clean
@@ -146,8 +169,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libsmdev.a
 
-%if %{with python}
+%if %{with python2}
 %files -n python-pysmdev
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/pysmdev.so
+%endif
+
+%if %{with python3}
+%files -n python3-pysmdev
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py3_sitedir}/pysmdev.so
 %endif
