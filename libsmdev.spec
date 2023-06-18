@@ -9,27 +9,27 @@
 %undefine	with_python3
 %endif
 # see m4/${libname}.m4 />= for required version of particular library
-%define		libcdata_ver	20190112
+%define		libcdata_ver	20220115
 %define		libcerror_ver	20120425
 %define		libcfile_ver	20160409
 %define		libclocale_ver	20120425
 %define		libcnotify_ver	20120425
 %define		libcthreads_ver	20160404
-%define		libuna_ver	20181006
+%define		libuna_ver	20210801
 Summary:	Library to access and read storage media (SM) devices
 Summary(pl.UTF-8):	Biblioteka służąca do dostępu i odczytu urządzeń nośników pamięci (SM)
 Name:		libsmdev
-Version:	20190315
-Release:	5
+Version:	20221028
+Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libsmdev/releases
 Source0:	https://github.com/libyal/libsmdev/releases/download/%{version}/%{name}-alpha-%{version}.tar.gz
-# Source0-md5:	d4438396d387f4074335846674a48508
+# Source0-md5:	193ab43fb38b3a6668d43c8313d25d05
 URL:		https://github.com/libyal/libsmdev/
-BuildRequires:	autoconf >= 2.59
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
-BuildRequires:	gettext-tools >= 0.18.1
+BuildRequires:	gettext-tools >= 0.21
 BuildRequires:	libcdata-devel >= %{libcdata_ver}
 BuildRequires:	libcerror-devel >= %{libcerror_ver}
 BuildRequires:	libcfile-devel >= %{libcfile_ver}
@@ -37,7 +37,7 @@ BuildRequires:	libclocale-devel >= %{libclocale_ver}
 BuildRequires:	libcnotify-devel >= %{libcnotify_ver}
 BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
 BuildRequires:	libuna-devel >= %{libuna_ver}
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2
 BuildRequires:	pkgconfig
 %{?with_python2:BuildRequires:	python-devel >= 1:2.5}
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
