@@ -1,31 +1,29 @@
 #
 # Conditional build:
-%bcond_without	python	# Python bindings (any)
-%bcond_without	python2	# CPython 2.x bindings
+%bcond_without	python	# Python (3) bindings
 %bcond_without	python3	# CPython 3.x bindings
 #
 %if %{without python}
-%undefine	with_python2
 %undefine	with_python3
 %endif
 # see m4/${libname}.m4 />= for required version of particular library
-%define		libcdata_ver	20220115
+%define		libcdata_ver	20230108
 %define		libcerror_ver	20120425
 %define		libcfile_ver	20160409
 %define		libclocale_ver	20120425
 %define		libcnotify_ver	20120425
 %define		libcthreads_ver	20160404
-%define		libuna_ver	20210801
+%define		libuna_ver	20230702
 Summary:	Library to access and read storage media (SM) devices
 Summary(pl.UTF-8):	Biblioteka służąca do dostępu i odczytu urządzeń nośników pamięci (SM)
 Name:		libsmdev
-Version:	20221028
+Version:	20231128
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libsmdev/releases
 Source0:	https://github.com/libyal/libsmdev/releases/download/%{version}/%{name}-alpha-%{version}.tar.gz
-# Source0-md5:	193ab43fb38b3a6668d43c8313d25d05
+# Source0-md5:	cc8e055dc26f9d1863f528818f45ea3e
 URL:		https://github.com/libyal/libsmdev/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
@@ -39,8 +37,7 @@ BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
 BuildRequires:	libuna-devel >= %{libuna_ver}
 BuildRequires:	libtool >= 2:2
 BuildRequires:	pkgconfig
-%{?with_python2:BuildRequires:	python-devel >= 1:2.5}
-%{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
+%{?with_python3:BuildRequires:	python3-devel >= 1:3.7}
 Requires:	libcdata >= %{libcdata_ver}
 Requires:	libcerror >= %{libcerror_ver}
 Requires:	libcfile >= %{libcfile_ver}
@@ -88,18 +85,6 @@ Static libsmdev library.
 %description static -l pl.UTF-8
 Statyczna biblioteka libsmdev.
 
-%package -n python-pysmdev
-Summary:	Python 2 bindings for libsmdev library
-Summary(pl.UTF-8):	Wiązania Pythona 2 do biblioteki libsmdev
-Group:		Libraries/Python
-Requires:	%{name} = %{version}-%{release}
-
-%description -n python-pysmdev
-Python 2 bindings for libsmdev library.
-
-%description -n python-pysmdev -l pl.UTF-8
-Wiązania Pythona 2 do biblioteki libsmdev.
-
 %package -n python3-pysmdev
 Summary:	Python 3 bindings for libsmdev library
 Summary(pl.UTF-8):	Wiązania Pythona 3 do biblioteki libsmdev
@@ -123,8 +108,8 @@ Wiązania Pythona 3 do biblioteki libsmdev.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_python2:--enable-python2} \
-	%{?with_python3:--enable-python3}
+	PYTHON_VERSION=3 \
+	%{?with_python3:--enable-python}
 %{__make}
 
 %install
@@ -136,9 +121,6 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libsmdev.la
 
-%if %{with python2}
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/pysmdev.{la,a}
-%endif
 %if %{with python3}
 %{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/pysmdev.{la,a}
 %endif
@@ -168,12 +150,6 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libsmdev.a
-
-%if %{with python2}
-%files -n python-pysmdev
-%defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/pysmdev.so
-%endif
 
 %if %{with python3}
 %files -n python3-pysmdev
