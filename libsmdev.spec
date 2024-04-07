@@ -17,13 +17,13 @@
 Summary:	Library to access and read storage media (SM) devices
 Summary(pl.UTF-8):	Biblioteka służąca do dostępu i odczytu urządzeń nośników pamięci (SM)
 Name:		libsmdev
-Version:	20231128
+Version:	20240309
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libsmdev/releases
 Source0:	https://github.com/libyal/libsmdev/releases/download/%{version}/%{name}-alpha-%{version}.tar.gz
-# Source0-md5:	cc8e055dc26f9d1863f528818f45ea3e
+# Source0-md5:	3d24b5b02a13e58cce3866e2b0a8ecb9
 URL:		https://github.com/libyal/libsmdev/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
